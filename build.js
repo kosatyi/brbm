@@ -1,11 +1,17 @@
-import fs from 'fs'
-import path from 'path'
-import glob from 'glob-promise'
-import parseMD from 'parse-md'
-import { parse as yml } from 'yaml'
-import { marked } from 'marked'
+const fs = require('fs')
+const path = require('path')
+const glob = require('glob-promise')
+const yaml = require('yaml')
+const parseMD = require('parse-md').default
+const Liquid = require('liquidjs').Liquid
+const marked = require('marked')
 
-import { engine } from './_liquid/engine.js'
+const engine = new Liquid({
+    layouts: '_layouts',
+    partials: '_includes',
+    extname: '.liquid',
+    dynamicPartials: false,
+})
 
 const fetchContent = (file) => {
     return fs.readFileSync(file).toString('utf-8')
@@ -20,7 +26,7 @@ const fetchData = async () => {
             let ext = path.extname(file)
             let name = path.basename(file, ext)
             let contents = fetchContent(path.join('_data', file))
-            site[name] = yml(contents)
+            site[name] = yaml.parse(contents)
         })
     })
     return site

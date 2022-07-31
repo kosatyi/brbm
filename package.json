@@ -1,14 +1,13 @@
 {
-  "type": "module",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.js"
   },
   "devDependencies": {
     "glob": "^8.0.3",
     "glob-promise": "^5.0.0",
     "liquidjs": "^9.39.2",
     "marked": "^4.0.18",
-    "parse-md": "^3.0.3",
+    "parse-md": "^2.0.5",
     "yaml": "^2.1.1"
   }
 }

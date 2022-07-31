@@ -31,7 +31,7 @@ const fileData = (file, cwd) => {
     let name = path.basename(file, ext)
     let contents = fetchContent(cwd ? path.join(cwd, file) : file)
     let { metadata, content } = parseMD(contents)
-    metadata.layout = metadata.layout ?? 'default'
+    metadata.layout = metadata.layout || 'default'
     metadata.content = content
     metadata.filename = file
     metadata.name = name

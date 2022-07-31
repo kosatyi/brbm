@@ -10,6 +10,7 @@ const marked = require('marked')
 const engine = new Liquid({
     layouts: '_layouts',
     partials: '_includes',
+    cache: true,
     extname: '.liquid',
     dynamicPartials: false,
 })
@@ -33,15 +34,16 @@ const fetchData = async () => {
     return site
 }
 
-const fileData = (file, cwd) => {
+const fileData = (file, group) => {
     let ext = path.extname(file)
     let name = path.basename(file, ext)
-    let contents = fetchContent(cwd ? path.join(cwd, file) : file)
+    let contents = fetchContent(group ? path.join(group, file) : file)
     let { metadata, content } = parseMD(contents)
     metadata.layout = metadata.layout || 'default'
-    metadata.content = content
+    metadata.content = marked.parse(content)
     metadata.filename = file
     metadata.name = name
+    metadata.group = group
     return metadata
 }
 
@@ -71,21 +73,22 @@ const fetchPages = async () => {
     return list
 }
 
-const build = async () => {
-    const site = await fetchData()
-    site.posts = await fetchCollection('_posts')
-    site.pages = await fetchPages()
-    return site
-}
-
 const changeExtension = (file, extension) => {
     const basename = path.basename(file, path.extname(file))
     return path.join(path.dirname(file), basename + extension)
 }
 
 const saveFile = (name, content) => {
-    fs.mkdirSync(path.join('_site', path.dirname(name)), { recursive: true })
-    fs.writeFileSync(path.join('_site', name), content)
+    fs.mkdirSync(path.join('.public', path.dirname(name)), { recursive: true })
+    fs.writeFileSync(path.join('.public', name), content)
+}
+
+const build = async () => {
+    const site = await fetchData()
+    site.posts = await fetchCollection('_posts')
+    site.archaeology = await fetchCollection('_archaeology')
+    site.pages = await fetchPages()
+    return site
 }
 
 build().then(function (site) {
@@ -100,7 +103,17 @@ build().then(function (site) {
         saveFile(filename, content)
     })
     site.posts.forEach((page) => {
-        page.content = marked.parse(page.content)
+        const html = `{% layout ${page.layout} %}{% block %}${page.content}{% endblock %}`
+        const template = engine.parse(html, page.filename)
+        const content = engine.renderSync(template, {
+            site,
+            page,
+        })
+        const filename = changeExtension(page.filename, '.html')
+        saveFile(filename, content)
+    })
+
+    site.archaeology.forEach((page) => {
         const html = `{% layout ${page.layout} %}{% block %}${page.content}{% endblock %}`
         const template = engine.parse(html, page.filename)
         const content = engine.renderSync(template, {

@@ -1,1 +1,10 @@
 name: Test Site
+
+collections:
+  posts:
+    title: ':name'
+    permalink: /:year/:path.html
+
+  archaeology:
+    permalink: /archaeology/:path.html
+

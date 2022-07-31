@@ -1,7 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob-promise')
-const yaml = require('yaml')
+const YAML = require('yaml')
+
 const parseMD = require('parse-md').default
 const Liquid = require('liquidjs').Liquid
 const marked = require('marked')
@@ -26,7 +27,7 @@ const fetchData = async () => {
             let ext = path.extname(file)
             let name = path.basename(file, ext)
             let contents = fetchContent(path.join('_data', file))
-            site[name] = yaml.parse(contents)
+            site[name] = YAML.parse(contents)
         })
     })
     return site
@@ -71,7 +72,7 @@ const fetchPages = async () => {
 }
 
 const build = async () => {
-    const site = {} // await fetchData()
+    const site = await fetchData()
     site.posts = await fetchCollection('_posts')
     site.pages = await fetchPages()
     return site

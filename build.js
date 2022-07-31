@@ -71,7 +71,7 @@ const fetchPages = async () => {
 }
 
 const build = async () => {
-    const site = await fetchData()
+    const site = {} // await fetchData()
     site.posts = await fetchCollection('_posts')
     site.pages = await fetchPages()
     return site

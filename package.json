@@ -1,6 +1,9 @@
 {
   "scripts": {
-
+    "build": "rollup -c && jekyll build",
+    "watch:assets": "rollup -c -w",
+    "watch:jekyll": "jekyll build -w --config=_config.yml,_config_dev.yml",
+    "publish": "rollup -c && jekyll build && wrangler publish"
   },
   "devDependencies": {
     "@cloudflare/kv-asset-handler": "^0.3.0",

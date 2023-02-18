@@ -1,5 +1,5 @@
 name = "brbm"
 compatibility_date = "2023-02-18"
-main = "worker/index.ts"
+main = "_assets/wrangler.js"
 [site]
-bucket = "./public"
+bucket = "_public"

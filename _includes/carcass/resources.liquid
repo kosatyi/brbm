@@ -1,0 +1,14 @@
+<link rel="preload" as="font" crossorigin="anonymous" href="/dist/fonts/inter-all-300-normal.woff" />
+<link rel="preload" as="font" crossorigin="anonymous" href="/dist/fonts/inter-all-400-normal.woff" />
+<link rel="preload" as="font" crossorigin="anonymous" href="/dist/fonts/inter-all-500-normal.woff" />
+<link rel="preload" as="font" crossorigin="anonymous" href="/dist/fonts/inter-all-600-normal.woff" />
+<link rel="preload" as="font" crossorigin="anonymous" href="/dist/fonts/inter-all-700-normal.woff" />
+<link href="{{ '/dist/index.css' | absolute_url }}" rel="stylesheet" type="text/css">
+<script src="{{ '/dist/vendor.js' | absolute_url }}"></script>
+<script defer src="{{ '/dist/index.js' | absolute_url }}"></script>
+<script>
+    const windowHeightCallback = () => { document.documentElement.style.setProperty('--bm-window-height', window.innerHeight + 'px') }
+    windowHeightCallback()
+    window.addEventListener('orientationchange', windowHeightCallback, { passive: true })
+    window.addEventListener('resize', windowHeightCallback, { passive: true })
+</script>

@@ -1,10 +1,8 @@
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler';
-// @ts-ignore
 import manifestJSON from '__STATIC_CONTENT_MANIFEST';
 const assetManifest = JSON.parse(manifestJSON);
-
 export default {
-    async fetch(request:any, env:any, ctx:any) {
+    async fetch(request, env, ctx) {
         try {
             // Add logic to decide whether to serve an asset or run your original Worker code
             return await getAssetFromKV(

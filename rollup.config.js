@@ -1,6 +1,6 @@
+import { resolve, commonjs, babel, terser, copy, scss } from '@kosatyi/rollup'
 import fs from 'fs'
 import path from 'path'
-import { resolve, commonjs, babel, terser, copy, scss } from '@kosatyi/rollup'
 import favicons from 'rollup-plugin-favicons'
 import sprite from 'rollup-plugin-svg-sprite'
 
@@ -9,6 +9,9 @@ const writeFile = (basePath) => {
         fs.writeFileSync(path.resolve(basePath, name), contents)
     }
 }
+
+const buildPath = 'dist'
+const rootPath = '/dist'
 
 const vendorInput = '_assets/vendor.js'
 const vendorOutput = {
@@ -53,8 +56,9 @@ const copyConfig = {
 }
 
 const spriteConfig = {
-    outputFolder: 'dist',
+    outputFolder: buildPath,
 }
+
 
 const faviconConfig = {
     source: '_assets/brand/logo-icon.svg',
@@ -65,7 +69,7 @@ const faviconConfig = {
         files.forEach(writeFile('dist/favicon'))
     },
     configuration: {
-        path: '/dist/favicon',
+        path: rootPath.concat('/favicon'),
         appName: 'Barbaricum - Археологія України',
         appShortName: 'Barbaricum',
         appDescription: 'Summary description',

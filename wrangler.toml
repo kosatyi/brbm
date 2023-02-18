@@ -1,0 +1,5 @@
+name = "brbm"
+compatibility_date = "2023-02-18"
+main = "worker/index.ts"
+[site]
+bucket = "./public"

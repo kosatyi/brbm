@@ -1,0 +1,98 @@
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-paginate-v2
+  - jekyll-redirect-from
+
+disable_disk_cache: true
+source: source
+destination: public
+
+markdown_ext: liquid,markdown,md
+
+baseurl: ''
+url: https://kosatyi.com/
+permalink: date
+
+pagination:
+  enabled: true
+  permalink: /:num/
+  collection: all
+  title: ':title - сторінка :num з :max'
+  limit: 0
+  per_page: 10
+  sort_field: date
+  sort_reverse: true
+  trail:
+    before: 2
+    after: 2
+
+title: Barbaricum
+description: Навчальна науково-дослідна лабораторія археологічних досліджень
+
+author:
+  name: Barbaricum
+  url: https://barbaricum.org/
+  twitter: BarbaricumArch
+  image:
+    path: /images/banner.png
+    height: 720
+    width: 480
+
+social:
+  name: Barbaricum
+  links:
+    - https://twitter.com/BarbaricumArch
+    - https://facebook.com/barbaricum
+    - https://vk.com/barbaricum
+    - https://www.instagram.com/_barbaricum_/
+
+collections:
+  news:
+    output: true
+    permalink: /:collection/:path:output_ext
+  archaeology:
+    output: true
+    permalink: /:collection/:path:output_ext
+  laboratory:
+    output: true
+    permalink: /:collection/:path:output_ext
+  journal:
+    output: true
+    permalink: /:collection/:path:output_ext
+
+defaults:
+  - scope:
+      path: ''
+    values:
+      lang: uk
+      layout: default
+      cover:
+        path: /images/cover/barbaricum.jpg
+      image:
+        path: /images/banner.png
+        height: 720
+        width: 480
+
+  - scope:
+      path: _posts
+    values:
+      layout: post
+      category: news
+
+  - scope:
+      path: _archaeology
+    values:
+      layout: post
+
+  - scope:
+      path: _laboratory
+    values:
+      layout: post
+
+  - scope:
+      path: _journal
+    values:
+      layout: post
+
